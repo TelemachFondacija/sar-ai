@@ -1,6 +1,7 @@
-import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome, MaterialIcons, Feather } from '@expo/vector-icons';
+import { Alert, Platform, View } from 'react-native';
+import { launchCamera, launchImageLibrary, ImagePickerResponse } from 'react-native-image-picker';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import EcoActionsScreen from '../screens/EcoActions/EcoActions';
 import ReportScreen from '../screens/Report/Report';
@@ -11,20 +12,81 @@ import Header from '@/components/Header';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator = () => {
+type BottomTabNavigatorProps = {
+  navigation: any; // Replace 'any' with the appropriate navigation type if you have it defined
+};
 
-    const location = useLocation()
+const BottomTabNavigator: React.FC<BottomTabNavigatorProps> = ({ navigation }) => {
+  const location = useLocation();
+
+  // Function to handle opening the camera or gallery
+  const handleReportPress = () => {
+    Alert.alert(
+      "EcoCam Report",
+      "Would you like to take a photo of ecological or enviromental problem?",
+      [
+        {
+          text: "Take Photo",
+          onPress: () => {
+            launchCamera(
+              {
+                mediaType: 'photo',
+                cameraType: 'back',
+                quality: 0.8,
+              },
+              (response: ImagePickerResponse) => {
+                if (response.didCancel) {
+                  console.log('User cancelled image picker');
+                } else if (response.errorCode) {
+                  console.error('Error: ', response.errorMessage);
+                } else if (response.assets && response.assets.length > 0) {
+                  // Navigate to the Report Screen with the selected image
+                  navigation.navigate("Report", { photo: response.assets[0] });
+                }
+              }
+            );
+          },
+        },
+        {
+          text: "Select from Gallery",
+          onPress: () => {
+            launchImageLibrary(
+              {
+                mediaType: 'photo',
+                quality: 0.8,
+              },
+              (response: ImagePickerResponse) => {
+                if (response.didCancel) {
+                  console.log('User cancelled image picker');
+                } else if (response.errorCode) {
+                  console.error('Error: ', response.errorMessage);
+                } else if (response.assets && response.assets.length > 0) {
+                  // Navigate to the Report Screen with the selected image
+                  navigation.navigate("Report", { photo: response.assets[0] });
+                }
+              }
+            );
+          },
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+      ]
+    );
+  };
+
   return (
-<Tab.Navigator
+    <Tab.Navigator
       screenOptions={{
         tabBarActiveTintColor: 'green',
         tabBarInactiveTintColor: 'gray',
-        header: () => <Header/>,
+        header: () => <Header />,
         tabBarStyle: {
-            height: 60,
-            paddingBottom: 8,
-            paddingVertical: 8
-        }
+          height: 60,
+          paddingBottom: 8,
+          paddingVertical: 8,
+        },
       }}
     >
       <Tab.Screen
@@ -52,6 +114,9 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <Feather name="camera" size={size} color={color} />
           ),
+          tabBarButton: (props) => (
+            <CustomReportButton {...props} onPress={handleReportPress} />
+          ),
         }}
       />
       <Tab.Screen
@@ -75,5 +140,18 @@ const BottomTabNavigator = () => {
     </Tab.Navigator>
   );
 };
+
+// Custom button for the "Report" tab
+type CustomReportButtonProps = {
+  onPress: () => void;
+  children?: React.ReactNode;
+};
+
+const CustomReportButton: React.FC<CustomReportButtonProps> = ({ onPress, children, ...props }) => (
+  <View {...props}>
+    <Feather name="camera" size={24} color="gray" onPress={onPress} />
+    {children}
+  </View>
+);
 
 export default BottomTabNavigator;
