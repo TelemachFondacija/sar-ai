@@ -19,7 +19,7 @@ const BottomTabNavigator = () => {
       screenOptions={{
         tabBarActiveTintColor: 'green',
         tabBarInactiveTintColor: 'gray',
-        header: () => <Header location={location || "Loading..."}/>,
+        header: () => <Header/>,
         tabBarStyle: {
             height: 60,
             paddingBottom: 8,

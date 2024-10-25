@@ -156,11 +156,8 @@ const HomeScreen: React.FC = () => {
         style={styles.gradient}
       >
         <ScrollView style={styles.scrollView}>
-          {/* Location Header */}
-          <View style={styles.header}>
-            <MaterialCommunityIcons name="map-marker" size={24} color={COLORS.primary} />
-            <Text style={styles.locationText}>{location?.city || 'Loading location...'}</Text>
-          </View>
+        
+          <Text style={styles.sectionTitle}>Environmental stats</Text>
 
           {/* Info Boxes */}
           <View style={styles.infoBoxContainer}>
@@ -257,13 +254,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  locationText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: COLORS.text,
-    marginLeft: 8,
-    fontFamily: Platform.OS === 'ios' ? 'SF Pro Display' : 'sans-serif',
-  },
   infoBoxContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -274,7 +264,8 @@ const styles = StyleSheet.create({
     margin: 4,
     padding: 16,
     alignItems: 'center',
-    backgroundColor: COLORS.glass,
+    borderRadius: 16,
+    backgroundColor: '#fff',
     ...Platform.select({
       ios: {
         shadowColor: '#000',
