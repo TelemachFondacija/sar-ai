@@ -108,9 +108,9 @@ const HomeScreen: React.FC = () => {
   const fetchNearbyActions = async (latitude: number, longitude: number) => {
     // Mock data - replace with actual API call
     const mockActions: NearbyAction[] = [
-      { id: '1', title: 'Plant a Tree in Central Park', distance: '0.5km', impact: 50 },
-      { id: '2', title: 'Join Beach Cleanup', distance: '1.2km', impact: 30 },
-      { id: '3', title: 'Local Recycling Drive', distance: '0.8km', impact: 25 },
+      { id: '1', title: 'Posadi drvo na Humu', distance: '0.5km', impact: 50 },
+      { id: '2', title: 'Pridruži se akciji čišćenja na Žuči', distance: '1.2km', impact: 30 },
+      { id: '3', title: 'Skupi 20 plastičnih flaša', distance: '0.8km', impact: 25 },
     ];
     setNearbyActions(mockActions);
   };
