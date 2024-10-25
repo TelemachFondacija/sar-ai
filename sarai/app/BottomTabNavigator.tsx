@@ -79,7 +79,7 @@ const BottomTabNavigator: React.FC<BottomTabNavigatorProps> = ({ navigation }) =
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: 'green',
+        tabBarActiveTintColor: '#00A651',
         tabBarInactiveTintColor: 'gray',
         header: () => <Header />,
         tabBarStyle: {
@@ -111,9 +111,6 @@ const BottomTabNavigator: React.FC<BottomTabNavigatorProps> = ({ navigation }) =
         name="Report"
         component={ReportScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="camera" size={size} color={color} />
-          ),
           tabBarButton: (props) => (
             <CustomReportButton {...props} onPress={handleReportPress} />
           ),

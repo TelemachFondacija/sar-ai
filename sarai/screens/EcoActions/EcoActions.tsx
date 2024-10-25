@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
+import { MaterialIcons } from '@expo/vector-icons';
+
 
 const COLORS = {
   primary: '#2C4C3B',
@@ -79,6 +80,12 @@ const EcoActivitiesScreen: React.FC = () => {
 
 const FeaturedCard: React.FC<{ action: EcoAction }> = ({ action }) => (
   <View style={styles.featuredCard}>
+    <MaterialIcons
+      name="emoji-events"
+      size={24}
+      color={'#DDC703'}
+      style={styles.trophyIcon}
+    />
     <Text style={styles.cardTitle}>{action.title}</Text>
     <Text style={styles.cardDescription}>{action.description}</Text>
     <Text style={styles.cardDetails}>Difficulty: {action.difficulty}</Text>
@@ -110,7 +117,7 @@ const ActivityCard: React.FC<{ action: EcoAction }> = ({ action }) => (
     <Text style={styles.cardDescription}>{action.description}</Text>
     <Text style={styles.cardDetails}>Difficulty: {action.difficulty}</Text>
     <Text style={styles.cardDetails}>Points: {action.points}</Text>
-    <Pressable style={styles.joinButton}><Text style={styles.buttonText}>Join Now</Text></Pressable>
+    <Pressable style={styles.joinButton1}><Text style={styles.buttonText}>Join Now</Text></Pressable>
   </View>
 );
 
@@ -134,7 +141,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   featuredCard: {
-    backgroundColor: 'white', // Aligning with COLORS.glass
+    backgroundColor: 'white', 
     borderRadius: 16,
     padding: 16,
     marginHorizontal: 16,
@@ -154,7 +161,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 4 },
-    elevation: 4, // Android shadow
+    elevation: 4, 
+  },
+  trophyIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
   cardTitle: {
     fontSize: 18,
@@ -172,7 +184,15 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   joinButton: {
-    backgroundColor: COLORS.secondary,
+    backgroundColor: '#00A651',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  joinButton1: {
+    backgroundColor: '#00A651',
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 8,
@@ -195,7 +215,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   filterButton: {
-    backgroundColor: COLORS.secondary,
+    backgroundColor: '#00A651',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 20,

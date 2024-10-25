@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS } from '../../styles/commonStyles';
 
 export default function Profile() {
@@ -20,7 +21,12 @@ export default function Profile() {
   });
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
+    <LinearGradient
+    colors={[COLORS.highlight, COLORS.background]}
+    style={styles.gradient}
+  >
+
       <View style={styles.topSection}>
         <View style={styles.profilePictureContainer}>
           <Image
@@ -42,9 +48,9 @@ export default function Profile() {
           <Text style={styles.nextLevelText}>Next Level: Eco Champion (500 Points)</Text>
         </View>
         <View style={styles.badgeContainer}>
-          <FontAwesome name="trophy" size={30} color={COLORS.accent} />
-          <FontAwesome name="leaf" size={30} color={COLORS.accent} />
-          <FontAwesome name="bicycle" size={30} color={COLORS.accent} />
+          <FontAwesome name="trophy" size={30} color={'#00A651'} />
+          <FontAwesome name="leaf" size={30} color={'#00A651'} />
+          <FontAwesome name="bicycle" size={30} color={'#00A651'} />
         </View>
       </View>
 
@@ -74,20 +80,22 @@ export default function Profile() {
         <Text style={styles.sectionTitle}>Achievements</Text>
         <View style={styles.badgeGrid}>
           <View style={styles.badgeItem}>
-            <FontAwesome name="trophy" size={40} color={COLORS.accent} />
+            <FontAwesome name="trophy" size={40} color={'#00A651'} />
             <Text style={styles.badgeText}>Eco Hero</Text>
           </View>
           <View style={styles.badgeItem}>
-            <FontAwesome name="leaf" size={40} color={COLORS.inactive} />
+            <FontAwesome name="leaf" size={40} color={'#00A651'} />
             <Text style={styles.badgeText}>Green Warrior</Text>
           </View>
           <View style={styles.badgeItem}>
-            <FontAwesome name="bicycle" size={40} color={COLORS.inactive} />
+            <FontAwesome name="bicycle" size={40} color={'#00A651'} />
             <Text style={styles.badgeText}>Cyclist Champion</Text>
           </View>
         </View>
       </View>
-    </ScrollView>
+      </LinearGradient>
+    </View>
+    
   );
 }
 
@@ -95,6 +103,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+  },
+  gradient: {
+    flex: 1
   },
   topSection: {
     alignItems: 'center',
@@ -119,7 +130,7 @@ const styles = StyleSheet.create({
   },
   ecoPoints: {
     fontSize: 16,
-    color: COLORS.accent,
+    color: '#00A651',
     marginTop: 5,
   },
   progressTracker: {
@@ -138,7 +149,7 @@ const styles = StyleSheet.create({
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: COLORS.accent,
+    backgroundColor: '#00A651',
   },
   levelContainer: {
     marginTop: 10,
@@ -147,11 +158,11 @@ const styles = StyleSheet.create({
   levelText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: COLORS.primary,
+    color: '#00A651',
   },
   nextLevelText: {
     fontSize: 14,
-    color: COLORS.inactive,
+    color: '#00A651',
     marginTop: 5,
   },
   badgeContainer: {
