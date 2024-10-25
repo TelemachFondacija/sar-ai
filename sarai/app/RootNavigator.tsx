@@ -5,12 +5,12 @@ import BottomTabNavigator from './BottomTabNavigator';
 
 const Stack = createStackNavigator();
 
-const RootNavigator = () => {
+const RootNavigator: React.FC = () => {
   return (
-      <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Main" component={BottomTabNavigator} />
-      </Stack.Navigator>
+    <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="Main" component={BottomTabNavigator} />
+    </Stack.Navigator>
   );
 };
 
