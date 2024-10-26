@@ -222,7 +222,7 @@ const HomeScreen: React.FC = () => {
           <View style={styles.actionsContainer}>
             <Text style={styles.sectionTitle}>Nearby Eco Actions</Text>
             {nearbyActions.map((action) => (
-              <BlurView key={action.id} intensity={30} tint="light" style={styles.actionCard}>
+              <View key={action.id} style={styles.actionCard}>
                 <View style={styles.actionContent}>
                   <View>
                     <Text style={styles.actionTitle}>{action.title}</Text>
@@ -232,7 +232,7 @@ const HomeScreen: React.FC = () => {
                     <Text style={styles.impactText}>+{action.impact}</Text>
                   </View>
                 </View>
-              </BlurView>
+              </View>
             ))}
           </View>
         </ScrollView>
@@ -342,7 +342,19 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 16,
     overflow: 'hidden',
-    backgroundColor: COLORS.glass,
+    backgroundColor: 'white',
+    
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.4,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 1,
+      },
+    }),
   },
   actionContent: {
     padding: 16,
