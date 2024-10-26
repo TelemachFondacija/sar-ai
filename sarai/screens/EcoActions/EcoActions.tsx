@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, ScrollView, Pressable, Button } from 'react-nat
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
+import AIEcoRecommendation from '@/components/AIRecommendation';
 
 
 const COLORS = {
@@ -60,9 +61,10 @@ const EcoActivitiesScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView>
+    <View style={styles.container}>
       <LinearGradient colors={[COLORS.highlight, COLORS.background]} style={StyleSheet.absoluteFill} />
-
+      <AIEcoRecommendation />
       <Text style={styles.headerText}>Featured Activity</Text>
       {actions[0] && <FeaturedCard action={actions[0]} />}
 
@@ -74,7 +76,8 @@ const EcoActivitiesScreen: React.FC = () => {
           <ActivityCard key={action.id} action={action} />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
+    </ScrollView>
   );
 };
 

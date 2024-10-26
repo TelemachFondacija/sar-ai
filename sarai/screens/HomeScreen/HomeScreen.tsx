@@ -4,9 +4,10 @@ import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
-import MapView, { Marker, Heatmap } from 'react-native-maps';
+import MapView, { Marker, UrlTile, PROVIDER_GOOGLE } from 'react-native-maps';
 import axios from 'axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 // Types
 interface LocationData {
   latitude: number;
@@ -33,7 +34,9 @@ interface NearbyAction {
 }
 
 // Constants
-const API_KEY = 'dd53e7d5-f2bf-4dc7-9ce6-e34bb9cbc689';
+const AIR_QUALITY_API_KEY = 'dd53e7d5-f2bf-4dc7-9ce6-e34bb9cbc689';
+const GOOGLE_API_KEY = 'AIzaSyBsk0dsBCvx-DhxrhCWZNatNdrLOKQzaRI';
+const HEATMAP_TILE_URL = `https://airquality.googleapis.com/v1/mapTypes/US_AQI/heatmapTiles/{z}/{x}/{y}?key=${GOOGLE_API_KEY}`;
 const COLORS = {
   primary: '#2C4C3B',
   secondary: '#739072',
@@ -96,7 +99,7 @@ const HomeScreen: React.FC = () => {
   const fetchAirQuality = async (latitude: number, longitude: number) => {
     try {
       const response = await axios.get(
-        `http://api.airvisual.com/v2/nearest_city?lat=${latitude}&lon=${longitude}&key=${API_KEY}`
+        `http://api.airvisual.com/v2/nearest_city?lat=${latitude}&lon=${longitude}&key=${AIR_QUALITY_API_KEY}`
       );
       setAirQuality(response.data.data.current);
     } catch (error) {
@@ -191,22 +194,27 @@ const HomeScreen: React.FC = () => {
           {/* Map View */}
           {location && (
             <View style={styles.mapContainer}>
-              <MapView
-                style={styles.map}
-                initialRegion={{
-                  latitude: location.latitude,
-                  longitude: location.longitude,
-                  latitudeDelta: 0.0922,
-                  longitudeDelta: 0.0421,
-                }}
-              >
-                <Marker
-                  coordinate={{
-                    latitude: location.latitude,
-                    longitude: location.longitude,
-                  }}
-                />
-              </MapView>
+            <MapView
+              style={styles.map}
+              provider={PROVIDER_GOOGLE}
+              initialRegion={{
+                latitude: location.latitude,
+                longitude: location.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            >
+              {/* Heatmap Tile Overlay */}
+              <UrlTile
+                urlTemplate={HEATMAP_TILE_URL}
+                zIndex={1} // Display on top of the map
+                maximumZ={16} // Maximum zoom level for the tile
+                flipY={false} // Keep Y-coordinates as-is
+              />
+
+              {/* Marker for current location */}
+              <Marker coordinate={{ latitude: location.latitude, longitude: location.longitude }} />
+            </MapView>
             </View>
           )}
 
@@ -301,7 +309,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'SF Pro Text' : 'sans-serif',
   },
   mapContainer: {
-    height: 200,
+    height: 300,
     borderRadius: 20,
     overflow: 'hidden',
     marginBottom: 20,
